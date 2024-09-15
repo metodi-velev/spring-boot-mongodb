@@ -4,6 +4,7 @@ import guru.springframework.commands.ProductForm;
 import guru.springframework.converters.ProductFormToProduct;
 import guru.springframework.domain.Product;
 import guru.springframework.repositories.ProductRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +14,12 @@ import java.util.List;
 /**
  * Created by jt on 1/10/17.
  */
+@Slf4j
 @Service
 public class ProductServiceImpl implements ProductService {
 
-    private ProductRepository productRepository;
-    private ProductFormToProduct productFormToProduct;
+    private final ProductRepository productRepository;
+    private final ProductFormToProduct productFormToProduct;
 
     @Autowired
     public ProductServiceImpl(ProductRepository productRepository, ProductFormToProduct productFormToProduct) {
@@ -53,7 +55,7 @@ public class ProductServiceImpl implements ProductService {
     public Product saveOrUpdateProductForm(ProductForm productForm) {
         Product savedProduct = saveOrUpdate(productFormToProduct.convert(productForm));
 
-        System.out.println("Saved Product Id: " + savedProduct.getId());
+        log.info("Saved Product Id: {}", savedProduct.getId());
         return savedProduct;
     }
 }
